@@ -38,6 +38,17 @@ OR
    make dpdk_app
 ```
 
+If Mellanox cards are used, the dpdk application can be built using Mellanox OFED
+libraries or the ones provided by the upstream rdma-core package. In order to select
+which ones to use, the **MLX_STACK** envirionment variable can be used with the
+following values: "ofed" or "upstream" (if not set, it will default to "upstream").
+For example:
+
+```
+   cd $GOPATH/src/github.com/openshift/app-netutil/
+   export MLX_STACK="ofed" && make dpdk_app
+```
+
 ## Reduce Image Size
 Multi-stage builds are a new feature requiring **Docker 17.05** or higher on
 the daemon and client. If multi-stage builds are NOT supported on your system,
