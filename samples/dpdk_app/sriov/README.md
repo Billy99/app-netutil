@@ -127,15 +127,15 @@ looking for VFs that meet the selector’s criteria. This takes a
 couple of seconds to collect. The following command can be used to
 determine the number of detected VFs. (NOTE: This is the allocated
 values and does not change as VFs are doled out.) See
-"intel.com/intel_sriov_dpdk_a" and "intel.com/intel_sriov_dpdk_b":
+"openshift.io/sriov_dpdk_a" and "openshift.io/sriov_dpdk_b":
 ```
 kubectl get node nfvsdn-22-oot -o json | jq '.status.allocatable'
 {
   "cpu": "64",
   "ephemeral-storage": "396858657750",
   "hugepages-1Gi": "64Gi",
-  "intel.com/intel_sriov_dpdk_a": "8",
-  "intel.com/intel_sriov_dpdk_b": "8",
+  "openshift.io/sriov_dpdk_a": "8",
+  "openshift.io/sriov_dpdk_b": "8",
   "memory": "64773512Ki",
   "pods": "110"
 }

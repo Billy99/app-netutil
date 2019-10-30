@@ -7,7 +7,7 @@ data:
   config.json: |
     {
         "resourceList": [{
-                "resourceName": "intel_sriov_dpdk_a",
+                "resourceName": "sriov_dpdk_a",
                 "selectors": {
                     "vendors": ["8086"],
                     "devices": ["154c", "1572"],
@@ -16,7 +16,7 @@ data:
                 }
             },
             {
-                "resourceName": "intel_sriov_dpdk_b",
+                "resourceName": "sriov_dpdk_b",
                 "selectors": {
                     "vendors": ["8086"],
                     "devices": ["154c", "1572"],

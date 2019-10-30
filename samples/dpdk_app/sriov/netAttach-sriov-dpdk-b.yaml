@@ -3,7 +3,7 @@ kind: NetworkAttachmentDefinition
 metadata:
   name: sriov-net-b
   annotations:
-    k8s.v1.cni.cncf.io/resourceName: intel.com/intel_sriov_dpdk_b
+    k8s.v1.cni.cncf.io/resourceName: openshift.io/sriov_dpdk_b
 spec:
   config: '{
   "type": "sriov",

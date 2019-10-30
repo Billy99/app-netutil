@@ -21,13 +21,13 @@ spec:
       requests:
         memory: 1Gi
         #cpu: "4"
-        intel.com/intel_sriov_dpdk_a: '1'
-        intel.com/intel_sriov_dpdk_b: '1'
+        openshift.io/sriov_dpdk_a: '1'
+        openshift.io/sriov_dpdk_b: '1'
       limits:
         hugepages-1Gi: 2Gi
         #cpu: "4"
-        intel.com/intel_sriov_dpdk_a: '1'
-        intel.com/intel_sriov_dpdk_b: '1'
+        openshift.io/sriov_dpdk_a: '1'
+        openshift.io/sriov_dpdk_b: '1'
     # Uncomment to control which DPDK App is running in container.
     # If not provided, l3fwd is default.
     #   Options: l2fwd l3fwd testpmd
