@@ -327,6 +327,10 @@ char** GetArgs(int *pArgc, eDpdkAppType appType)
 		//strncpy(&myArgsArray[argc++][0], "-m", DPDK_ARGS_MAX_ARG_STRLEN-1);
 		//strncpy(&myArgsArray[argc++][0], "1024", DPDK_ARGS_MAX_ARG_STRLEN-1);
 
+		// Add --log-level pmd.net.mlx5:8 for debgging
+		//strncpy(&myArgsArray[argc++][0], "--log-level", DPDK_ARGS_MAX_ARG_STRLEN-1);
+		//strncpy(&myArgsArray[argc++][0], "pmd.net.mlx5:8", DPDK_ARGS_MAX_ARG_STRLEN-1);
+
 		strncpy(&myArgsArray[argc++][0], "-n", DPDK_ARGS_MAX_ARG_STRLEN-1);
 		strncpy(&myArgsArray[argc++][0], "4", DPDK_ARGS_MAX_ARG_STRLEN-1);
 

@@ -22,7 +22,11 @@ This test setup assumes:
 
 This test setup uses two physical NICs (PFs) with one VF from each PF
 attached to the pod. It maps traffic from the PF to the each VF using
-VLANs. 
+VLANs.
+
+Both intel and Mellanox hardware is supported by a different set of
+configuration files. The use of both cards simultaneously is not
+supported.
 
 ## Download the sample yaml files
 Use the following steps to download the sample YAML files:
@@ -37,10 +41,19 @@ is `$GOPATH/src/github.com/openshift/app-netutil/samples/dpdk_app/sriov/`.
 
 ## Create the Network-Attachment-Definition for each desired network
 This setup assumes there are two networks, one network for each PF. The
-following commands setup those networks:
+following commands setup those networks.
+
+For Intel cards:
+
 ```
 kubectl create -f netAttach-sriov-dpdk-a.yaml
 kubectl create -f netAttach-sriov-dpdk-b.yaml
+```
+For Mellanox cards:
+
+```
+kubectl create -f netAttach-sriov-dpdk-mlx-a.yaml
+kubectl create -f netAttach-sriov-dpdk-mlx-b.yaml
 ```
 
 These YAML files map a VLAN to the VF. It is currently using VLAN 100 for
@@ -68,10 +81,11 @@ then update the file accordingly.
 ```
 kubectl create -f ./configMap.yaml
 ```
+Use `configMap-mlx.yaml` as a base for Mellanox cards.
 
 The following command can be used to collect info on which interfaces are
 in your system and manufacturer details that are used in the configMap to
-select available VFs. 
+select available VFs.
 ```
 lspci -nn | grep Ethernet
 01:00.0 Ethernet controller [0200]: Intel Corporation Ethernet Controller X710 for 10GbE SFP+ [8086:1572] (rev 01)
@@ -127,15 +141,15 @@ looking for VFs that meet the selector’s criteria. This takes a
 couple of seconds to collect. The following command can be used to
 determine the number of detected VFs. (NOTE: This is the allocated
 values and does not change as VFs are doled out.) See
-"intel.com/intel_sriov_dpdk_a" and "intel.com/intel_sriov_dpdk_b":
+"openshift.io/sriov_dpdk_a" and "openshift.io/sriov_dpdk_b":
 ```
 kubectl get node nfvsdn-22-oot -o json | jq '.status.allocatable'
 {
   "cpu": "64",
   "ephemeral-storage": "396858657750",
   "hugepages-1Gi": "64Gi",
-  "intel.com/intel_sriov_dpdk_a": "8",
-  "intel.com/intel_sriov_dpdk_b": "8",
+  "openshift.io/sriov_dpdk_a": "8",
+  "openshift.io/sriov_dpdk_b": "8",
   "memory": "64773512Ki",
   "pods": "110"
 }

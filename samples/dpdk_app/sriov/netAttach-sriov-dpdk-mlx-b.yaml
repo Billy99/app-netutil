@@ -11,7 +11,6 @@ spec:
   "name": "sriov-network-b",
   "vlan": 200,
   "vlanQoS": 1,
-  "max_tx_rate": 100,
   "spoofchk": "off",
   "trust": "on"
 }'

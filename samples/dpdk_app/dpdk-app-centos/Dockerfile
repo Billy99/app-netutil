@@ -17,6 +17,16 @@ RUN yum install -y wget numactl-devel git golang make; yum clean all
 #RUN yum install -y pciutils iproute; yum clean all
 
 #
+# Install Mellanox libraries: The variable MLX_STAC controls what set of libraries to install.
+# Allowed values: upstream | ofed
+#
+WORKDIR /usr/src
+ARG MLX_STACK
+ENV MLX_STACK ${MLX_STACK:-upstream}
+COPY ./install_mlx_libs.sh ./install_mlx_libs.sh
+RUN ./install_mlx_libs.sh
+
+#
 # Download and Build APP-NetUtil
 #
 WORKDIR /root/go/src/
@@ -42,8 +52,10 @@ RUN sed -i -e 's/EAL_IGB_UIO=y/EAL_IGB_UIO=n/' config/common_linux
 RUN sed -i -e 's/KNI_KMOD=y/KNI_KMOD=n/' config/common_linux
 RUN sed -i -e 's/LIBRTE_KNI=y/LIBRTE_KNI=n/' config/common_linux
 RUN sed -i -e 's/LIBRTE_PMD_KNI=y/LIBRTE_PMD_KNI=n/' config/common_linux
+RUN sed -i -e 's/CONFIG_RTE_LIBRTE_MLX5_PMD=n/CONFIG_RTE_LIBRTE_MLX5_PMD=y/' config/common_base
 # Additional Debug if Needed
 #RUN sed -i -e 's/CONFIG_RTE_LIBRTE_ETHDEV_DEBUG=n/CONFIG_RTE_LIBRTE_ETHDEV_DEBUG=y/' config/common_base
+#RUN sed -i -e 's/CONFIG_RTE_LIBRTE_MLX5_DEBUG=n/CONFIG_RTE_LIBRTE_MLX5_DEBUG=y/' config/common_base
 
 # DPDK_VER 19.02
 #RUN sed -i -e 's/EAL_IGB_UIO=y/EAL_IGB_UIO=n/' config/common_linuxapp
@@ -109,6 +121,11 @@ COPY --from=0 /usr/bin/l3fwd /usr/bin/l3fwd
 COPY --from=0 /usr/bin/testpmd /usr/bin/testpmd
 COPY --from=0 /lib64/libnetutil_api.so /lib64/libnetutil_api.so
 COPY --from=0 /usr/lib64/libnuma.so.1 /usr/lib64/libnuma.so.1
+COPY --from=0 /usr/lib64/libibverbs.so.1 /usr/lib64/libibverbs.so.1
+COPY --from=0 /usr/lib64/libmlx4.so.1 /usr/lib64/libmlx4.so.1
+COPY --from=0 /usr/lib64/libmlx5.so.1 /usr/lib64/libmlx5.so.1
+COPY --from=0 /usr/lib64/libnl-3.so.200 /usr/lib64/libnl-3.so.200
+COPY --from=0 /usr/lib64/libnl-route-3.so.200 /usr/lib64/libnl-route-3.so.200
 # END
 
 COPY ./docker-entrypoint.sh /
